@@ -3,6 +3,7 @@
   "displayName": "demoext",
   "description": "Demo extension for vs code no particular purpose",
   "version": "0.0.1",
+  "license": "MIT",
   "engines": {
     "vscode": "^1.72.0"
   },
@@ -10,16 +11,61 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:demoext.helloWorld"
+    "onFileSystem:file"
   ],
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "demoext.helloWorld",
-        "title": "Hello World"
+        "command": "demoext.toUpper",
+        "title": "Uppercase selection",
+        "icon": "$(arrow-up) Up"
+      },
+      {
+        "command": "demoext.toLower",
+        "title": "Lowercase selection",
+        "category": "text shit",
+        "icon": "$(arrow-down) Low"
+      },
+      {
+        "command": "demoext.toCapital",
+        "title": "Capitalize selection",
+        "icon": "$(pinned)"
       }
-    ]
+    ],
+    "menus": {
+      "commandPalette": [
+        {
+          "command": "demoext.toUpper",
+          "when": "editorHasSelection"
+        },
+        {
+          "command": "demoext.toLower",
+          "when": "editorHasSelection"
+        },
+        {
+          "command": "demoext.toCapital",
+          "when": "editorHasSelection"
+        }
+      ],
+      "editor/": [
+        {
+          "command": "demoext.toUpper",
+          "group": "file",
+          "when": "editorHasSelection"
+        },
+        {
+          "command": "demoext.toLower",
+          "group": "file",
+          "when": "editorHasSelection"
+        },
+        {
+          "command": "demoext.toCapital",
+          "group": "file",
+          "when": "editorHasSelection"
+        }
+      ]
+    }
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",
