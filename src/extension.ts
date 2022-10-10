@@ -1,5 +1,5 @@
 import * as vs from 'vscode';
-import { CasingManager } from './casing';
+import { toCapital, toLower, toUpper } from './casing';
 
 
 function register(context: vs.ExtensionContext, name: string, fn: (...args: any[]) => any): void {
@@ -9,9 +9,9 @@ function register(context: vs.ExtensionContext, name: string, fn: (...args: any[
 
 export function activate(context: vs.ExtensionContext) {
 	console.log('demoext is now active!');
-	register(context, 'demoext.toUpper', CasingManager.toUpper);
-	register(context, 'demoext.toLower', CasingManager.toLower);
-	register(context, 'demoext.toCapital', CasingManager.toCapital);
+	register(context, 'demoext.toUpper', toUpper);
+	register(context, 'demoext.toLower', toLower);
+	register(context, 'demoext.toCapital', toCapital);
 }
 
 // this method is called when your extension is deactivated

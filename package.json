@@ -18,50 +18,60 @@
     "commands": [
       {
         "command": "demoext.toUpper",
+        "enablement": "true",
         "title": "Uppercase selection",
-        "icon": "$(arrow-up) Up"
+        "icon": "$(arrow-up)",
+        "category": "demoext",
+        "shortTitle": "Uppercase selection"
       },
       {
         "command": "demoext.toLower",
+        "enablement": "true",
         "title": "Lowercase selection",
-        "category": "text shit",
-        "icon": "$(arrow-down) Low"
+        "category": "demoext",
+        "icon": "$(arrow-down)",
+        "shortTitle": "Lowercase selection"
       },
       {
         "command": "demoext.toCapital",
+        "enablement": "true",
         "title": "Capitalize selection",
-        "icon": "$(pinned)"
+        "icon": "$(pinned)",
+        "category": "demoext"
       }
     ],
     "menus": {
       "commandPalette": [
         {
           "command": "demoext.toUpper",
-          "when": "editorHasSelection"
+          "when": "editorHasSelection",
+          "group": "edit"
         },
         {
           "command": "demoext.toLower",
-          "when": "editorHasSelection"
+          "when": "editorHasSelection",
+          "group": "edit"
         },
         {
           "command": "demoext.toCapital",
-          "when": "editorHasSelection"
+          "when": "editorHasSelection",
+          "group": "edit"
         }
       ],
-      "editor/": [
+      "editor/context": [
         {
           "command": "demoext.toUpper",
-          "group": "file",
+          "group": "1_modification",
           "when": "editorHasSelection"
         },
         {
           "command": "demoext.toLower",
-          "group": "file",
+          "group": "1_modification",
           "when": "editorHasSelection"
         },
         {
           "command": "demoext.toCapital",
-          "group": "file",
+          "group": "1_modification",
           "when": "editorHasSelection"
         }
       ]

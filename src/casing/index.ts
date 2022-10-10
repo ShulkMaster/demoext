@@ -1,30 +1,30 @@
 import * as vs from 'vscode';
 
-export class CasingManager {
+const applyTransform = (transform: (s: string) => string): void => {
+    const editor = vs.window.activeTextEditor!;
+    editor.edit(e => {
+        editor.selections.forEach(s => {
+            const ss = editor.document.getText(s);
+            const ssNew = transform(ss);
+            console.log(ssNew);
+            e.replace(s, ssNew);
+        });
+    });
+    
+};
 
-    private static apply(transform: (s: string) => string): void {
-        const editor = vs.window.activeTextEditor!;
-        console.log(editor);
-        
-		editor.selections.forEach(s => {
-			const ss = editor.document.getText(s);
-			const ssNew = transform(ss);
-			editor.edit(e => e.replace(s, ssNew));
-		});
-    }
 
+export const toUpper = (): void => {
+    applyTransform(ss => ss.toLocaleUpperCase());
+};
 
-    public static toUpper(): void {
-        this.apply(ss => ss.toLocaleUpperCase());
-    }
+export const toLower = (): void => {
+    applyTransform(ss => ss.toLocaleLowerCase());
+};
 
-    public static toLower(): void {
-        this.apply(ss => ss.toLocaleLowerCase());
-    }
-
-    public static toCapital(): void {
-        this.apply(ss => {
-            return ss.split(' ')
+export const toCapital = (): void => {
+    applyTransform(ss => {
+        return ss.split(' ')
             .map(s => {
                 switch (s.length) {
                     case undefined:
@@ -34,6 +34,5 @@ export class CasingManager {
                         return s[0].toLocaleUpperCase() + s.substring(1);
                 }
             }).join(' ');
-        });
-    }
-}
+    });
+};
