@@ -1,5 +1,10 @@
+import { YomamaApi } from './api';
 import * as vs from 'vscode';
 import { toCapital, toLower, toUpper } from './casing';
+
+const contextList = {
+	yomama: 'yomamaContext',
+};
 
 
 function register(context: vs.ExtensionContext, name: string, fn: (...args: any[]) => any): void {
@@ -12,7 +17,18 @@ export function activate(context: vs.ExtensionContext) {
 	register(context, 'demoext.toUpper', toUpper);
 	register(context, 'demoext.toLower', toLower);
 	register(context, 'demoext.toCapital', toCapital);
+	const output = vs.window.createOutputChannel("Demoext");
+	vs.commands.executeCommand('setContext', contextList.yomama, false);
+	register(context, 'demoext.enableYoMama', () => vs.commands.executeCommand('setContext', contextList.yomama, true));
+	register(context, 'demoext.disableYoMama', () => vs.commands.executeCommand('setContext', contextList.yomama, false));
+	register(context, 'demoext.yoMama', async () => {
+		const editor = vs.window.activeTextEditor;
+		if (!editor) { return; }
+		const joke = await new YomamaApi().getJoke();
+		editor.edit(edition => edition.insert(editor.selection.active, joke));
+	});
+
 }
 
 // this method is called when your extension is deactivated
-export function deactivate() {}
+export function deactivate() { }

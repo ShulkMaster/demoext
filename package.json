@@ -38,6 +38,26 @@
         "title": "Capitalize selection",
         "icon": "$(pinned)",
         "category": "demoext"
+      },
+      {
+        "command": "demoext.enableYoMama",
+        "category": "demoext",
+        "enablement": "!yomamaContext",
+        "title": "Enable yo mama"
+      },
+      {
+        "command": "demoext.disableYoMama",
+        "category": "demoext",
+        "enablement": "yomamaContext",
+        "title": "Disable yo mama"
+      },
+      {
+        "command": "demoext.yoMama",
+        "category": "demoext",
+        "enablement": "yomamaContext",
+        "icon": "$(play)",
+        "shortTitle": "Yo mama joke",
+        "title": "Insert a yo mama joke"
       }
     ],
     "menus": {
@@ -73,6 +93,13 @@
           "command": "demoext.toCapital",
           "group": "1_modification",
           "when": "editorHasSelection"
+        }
+      ],
+      "editor/title": [
+        {
+          "command": "demoext.yoMama",
+          "group": "navigation",
+          "when": "yomamaContext"
         }
       ]
     }
