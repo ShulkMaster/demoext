@@ -1,5 +1,5 @@
 import { DictionaryApi } from '../api';
-import { languages, window, CodeActionProvider, Disposable, CodeAction, CancellationToken, CodeActionContext, Command, ProviderResult, Range, Selection, TextDocument, CodeActionKind } from 'vscode';
+import { languages, window, CodeActionProvider, Disposable, CodeAction, CancellationToken, CodeActionContext, Command, ProviderResult, Range, Selection, TextDocument, CodeActionKind, DiagnosticSeverity } from 'vscode';
 
 export class PlainAction implements CodeActionProvider<CodeAction> {
 
@@ -17,14 +17,23 @@ export class PlainAction implements CodeActionProvider<CodeAction> {
     provideCodeActions(document: TextDocument, range: Selection | Range, context: CodeActionContext, token: CancellationToken): ProviderResult<(CodeAction | Command)[]> {
         const text = document.getText(range);
         if(!text) { return []; }
-        const definition = this.client.getWord(text);
+        const words = text.split(' ');
+        if(words.length > 1) { return []; }
+        const definition = this.client.getWord(words[0]);
              
         return definition.then(d => {
             if(!d) { return []; }
             const synonyms = d.flatMap(w => w.meanings)
             .flatMap(m => m.synonyms)
-            .map(s => new CodeAction(s, CodeActionKind.RefactorInline));
-            console.log(synonyms);
+            .map(s => {
+                const action = new CodeAction(s, CodeActionKind.Empty);
+                action.diagnostics = [{
+                    message: 'possible synonyms',
+                    range,
+                    severity: DiagnosticSeverity.Hint,
+                }];
+                return action;
+            });
             
             return synonyms;
         });
