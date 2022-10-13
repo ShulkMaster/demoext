@@ -1,6 +1,6 @@
 import { YomamaApi } from './api';
 import * as vs from 'vscode';
-import { PlainHoover, toCapital, toLower, toUpper } from './features';
+import { PlainHoover, toCapital, toLower, toUpper, PlainAction } from './features';
 
 const contextList = {
 	yomama: 'yomamaContext',
@@ -28,7 +28,7 @@ export function activate(context: vs.ExtensionContext) {
 		editor.edit(edition => edition.insert(editor.selection.active, joke));
 	});
 	context.subscriptions.push(PlainHoover.register());
-
+	context.subscriptions.push(PlainAction.register());
 }
 
 // this method is called when your extension is deactivated
