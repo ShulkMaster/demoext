@@ -1,6 +1,6 @@
 import { YomamaApi } from './api';
 import * as vs from 'vscode';
-import { toCapital, toLower, toUpper } from './casing';
+import { PlainHoover, toCapital, toLower, toUpper } from './features';
 
 const contextList = {
 	yomama: 'yomamaContext',
@@ -27,6 +27,7 @@ export function activate(context: vs.ExtensionContext) {
 		const joke = await new YomamaApi().getJoke();
 		editor.edit(edition => edition.insert(editor.selection.active, joke));
 	});
+	context.subscriptions.push(PlainHoover.register());
 
 }
 

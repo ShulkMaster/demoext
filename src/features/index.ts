@@ -1,4 +1,5 @@
 import * as vs from 'vscode';
+export * from './PlainHoover';
 
 const applyTransform = (transform: (s: string) => string): void => {
     const editor = vs.window.activeTextEditor!;
